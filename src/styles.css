@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+    --negro: rgb(38, 38, 38);
+    --blanco: rgb(236, 236, 236);
+}
+
+*{
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background-color: black;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}

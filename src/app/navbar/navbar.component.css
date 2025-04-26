@@ -1,0 +1,26 @@
+
+#items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.item a{
+    font-style: bold;
+    font-weight: 600;
+    color: white;
+    transition-duration: 0.5s;
+    background-color: var(--negro);
+}
+
+#barra-navegacion{
+    position:fixed;
+    align-content: center;
+    z-index: 99;
+    top: 10px;
+    right: 29%;
+    background-color: var(--negro);
+    padding-right: 2rem;
+    border-radius: 20px;
+}
