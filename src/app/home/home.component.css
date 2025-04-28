@@ -1,0 +1,28 @@
+h1{
+    color: var(--blanco);
+}
+
+.container-juegos{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.carta-juego{
+    position: relative;
+    justify-items: center;
+    overflow: hidden;
+    height: 60vh;
+}
+
+.carta-juego img{
+    position: absolute;
+    object-fit: cover;
+    height: 60vh;
+    width: 100%;
+}
+
+.descripcion{
+    z-index: 2;
+    background-color: transparent
+    ;
+}

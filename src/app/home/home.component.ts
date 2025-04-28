@@ -9,6 +9,15 @@ import { NavbarComponent } from '../navbar/navbar.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
 
+export class HomeComponent {
+  
 }
+
+// const cartaJuego = () => {
+//   var mensaje = `
+//     <div class = "carta-juego">
+//       <h2>
+//     </div>
+//   `
+// }

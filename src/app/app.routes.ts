@@ -10,11 +10,11 @@ export const routes: Routes = [
     },
 
     {
-        path:'', component: RegistroComponent
+        path:'registro', component: RegistroComponent
     },
 
     {
-        path:'home', component: HomeComponent
+        path:'', component: HomeComponent
     },
 
     {
