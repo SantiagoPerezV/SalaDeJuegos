@@ -27,6 +27,7 @@
 
 .formulario-login button{
     margin: 3%;
+    color:var(--negro);
 }
 
 .formulario-login p, .formulario-login a{
