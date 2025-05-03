@@ -1,0 +1,31 @@
+*{
+    justify-items: center;
+}
+
+.container-quien-soy{
+    margin-top: 5%;
+}
+
+.container-quien-soy h3{
+    font-size: 5vw;
+}
+
+.container-usuario{
+    display: flex;
+}
+
+.avatar{
+    width: 25vw;
+}
+
+.name{
+    font-size: 4vw;
+}
+
+.container-info{
+    font-size: 1.5vw;
+}
+
+.item-info{
+    margin-top: 13vh;
+}

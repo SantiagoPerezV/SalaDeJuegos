@@ -2,7 +2,7 @@ h1{
     color: var(--blanco);
 }
 
-.container-juegos{
+#container-juegos{
     display: grid;
     grid-template-columns: 50% 50%;
 }
@@ -22,7 +22,10 @@ h1{
 }
 
 .descripcion{
+    position: relative;
+    color: var(--negro);
+    justify-items: center;
+    align-content: space-around;
+    padding: 2%;
     z-index: 2;
-    background-color: transparent
-    ;
 }

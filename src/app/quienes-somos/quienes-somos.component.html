@@ -1,23 +1,28 @@
 <app-navbar/>
-<div class="container-quien*soy">
+
+<div class="container-quien-soy">
     <h3>Quien Soy</h3>
     <div *ngIf="userData() as user" class="container-usuario">
-        <div class="container-avatar">
+        <div class="container-presentacion">
+
+            <h2 *ngIf="user.name" class="name">{{ user.name }}</h2>
+            
             <img [src]="user.avatar_url" [alt]="user.name || 'Avatar'" class="avatar">
+
         </div>
 
         
         <div class="container-info">
 
-            <h2 *ngIf="user.name" class="name">{{ user.name }}</h2>
+            <p *ngIf="user.login" class="login item-info">{{ user.login }}</p>
 
-            <p *ngIf="user.login" class="login">{{ user.login }}</p>
+            <p *ngIf="user.bio" class="bio item-info">{{ user.bio }}</p>
 
-            <p *ngIf="user.bio" class="bio">{{ user.bio }}</p>
-
-            <p *ngIf="user.location" class="location">Ubicación: {{ user.location }}</p>
+            <p *ngIf="user.location" class="location item-info">Ubicación: {{ user.location }}</p>
 
         </div>
+
     </div>
 </div>
+
 <app-footer/>
