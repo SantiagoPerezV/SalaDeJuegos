@@ -1,20 +1,21 @@
 import { Routes } from '@angular/router';
-import { RegistroComponent } from './registro/registro.component';
 import { HomeComponent } from './home/home.component';
 import { QuienesSomosComponent } from './quienes-somos/quienes-somos.component';
-import { AhorcadoComponent } from './ahorcado/ahorcado.component';
-import { MayorOMenorComponent } from './mayor-o-menor/mayor-o-menor.component';
-import { PreguntadosComponent } from './preguntados/preguntados.component';
-import { JuegoPropioComponent } from './juego-propio/juego-propio.component';
 
 export const routes: Routes = [
-    {
+
+    { //ruta principal que muestra el login con la base de datos,
         path:'login',
         loadComponent: () => import('./login/login.component').then(m => m.LoginComponent)
     },
 
-    {
-        path:'registro', component: RegistroComponent
+    { //ruta principal que muestra el Registro con la base
+        path:'registro', loadComponent: ()=> import('./registro/registro.component').then(m=>m.RegistroComponent)
+    },
+
+    { //ruta comodin, Si encuentra una url no definida, vuelve a home
+        path:'**',
+        redirectTo: ''
     },
 
     {
