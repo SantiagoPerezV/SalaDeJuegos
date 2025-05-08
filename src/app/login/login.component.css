@@ -23,6 +23,7 @@
 
 .formulario-login input{
     margin-top: 5%;
+    color: var(--negro);
 }
 
 .formulario-login button{

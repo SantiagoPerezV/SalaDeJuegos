@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 
@@ -16,7 +16,7 @@ const juego_propio: string = '';
 })
 
 
-export class HomeComponent {
+export class HomeComponent{
   ahorcado = cartaJuego('/assets/ahorcado.png', 'Ahorcado', '/ahorcado');
 
   mayor_o_menor = cartaJuego('/assets/mayor_o_menor.jpg', 'Mayor o menor', '/mayor-o-menor');
@@ -24,7 +24,7 @@ export class HomeComponent {
   preguntados = cartaJuego('/assets/preguntados.jpg', 'Preguntados', '/preguntados');
 
   juego_propio = cartaJuego('/assets/proximamente.jpg', 'Proximamente', '/juego-propio');
-
+  
   
 }
 

@@ -14,7 +14,7 @@ export class SupabaseService {
 
   /**
   * BehaviorSubject es como una "caja" especial que:
-  * 1. Guarda el valor actual de las tareas
+  * 1. Guarda el valor actual de los usuarios
   * 2. Notifica a todos los interesados cuando este valor cambia
   * 3. Puede dar el último valor a los nuevos suscriptores
   * 
@@ -23,17 +23,17 @@ export class SupabaseService {
   private usuarios = new BehaviorSubject<Usuario[]>([]);
 
   /**
-   * Versión pública de tasks que otros componentes pueden usar para recibir
+   * Versión pública de usuarios que otros componentes pueden usar para recibir
    * actualizaciones. Es como la "transmisión en vivo" de nuestras tareas.
    * 
    * Los componentes pueden suscribirse así:
    * this.supabaseService.tasks$.subscribe(tasks => {
-   *   // Hacer algo con las tareas actualizadas
+   *   // Hacer algo con los usuarios actualizados
    * });
    */
   usuarios$ = this.usuarios.asObservable();
 
-  private iniciar = false;
+  private iniciar = false; //Bandera para verificar que la conexión es correcta
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { //Insertamos el platform id para identificar si estamos en un navegador o en un servidor
     if(isPlatformBrowser(this.platformId)){ //Importa que ingrese por navegador
@@ -63,7 +63,7 @@ export class SupabaseService {
    * 2. Comprueba que podemos conectar con Supabase
    * 3. Crea las tablas si no existen
    * 4. Carga las tareas iniciales
-   */
+  */
 
   private async inicializado(){
     if(this.iniciar){
@@ -113,7 +113,7 @@ export class SupabaseService {
    * Ejemplo de uso:
    * try {
    *   await supabaseService.Agregarusuario('santirojo06@gmail.com', santi123, 123);
-   *   // La tarea se creó exitosamente
+   *   // El usuario se creó exitosamente
    * } catch (error) {
    *   // Manejar el error
    * }
@@ -124,7 +124,12 @@ export class SupabaseService {
     if (error){
       throw error;
     } 
+  }
 
+  async ObtenerIdPorMail(mail:string): Promise<string>{
+    const {data, error} = await this.supabase.from('Usuarios').select('id').eq('mail', mail);
+    if(error){throw error;};
+    return data[0].id; //Devuelve un array, que dentro de corchetes tiene los valores que devuelve.
   }
 
 }

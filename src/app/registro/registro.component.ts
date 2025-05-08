@@ -8,6 +8,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Usuario } from '../lib/interfaces';
 import { SupabaseService } from '../supabase.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -22,7 +23,7 @@ import { SupabaseService } from '../supabase.service';
  * - OnInit: Para inicializar cosas cuando el componente se crea
  * - OnDestroy: Para limpiar cuando el componente se destruye
  */
-export class RegistroComponent implements OnInit, OnDestroy{
+export class RegistroComponent implements OnInit{
   usuarios: Usuario[] = [];
 
   id: string = '';
@@ -49,7 +50,7 @@ export class RegistroComponent implements OnInit, OnDestroy{
    * El constructor se llama cuando Angular crea el componente.
    * Aquí recibimos los servicios que necesitamos (inyección de dependencias).
   */
-  constructor(private supabase: SupabaseService, @Inject(PLATFORM_ID) private platformId: Object){
+  constructor(private supabase: SupabaseService, private router: Router,@Inject(PLATFORM_ID) private platformId: Object){
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -65,7 +66,7 @@ export class RegistroComponent implements OnInit, OnDestroy{
   ngOnInit(): void{
 
     this.usuariosSubscription = this.supabase.usuarios$.subscribe({
-      //Cuando recibimos nuevas tareas
+      //Cuando recibimos nuevas tareas, guardamos la lista de objetos Usuario en la variable local this.usuarios.
       next: (usuarios: Usuario[]) => {
         this.usuarios = usuarios;
       },
@@ -85,32 +86,62 @@ export class RegistroComponent implements OnInit, OnDestroy{
    * El operador ?. (optional chaining) asegura que solo llamemos a unsubscribe
    * si la suscripción existe.
   */
-  ngOnDestroy() {
-    this.usuariosSubscription?.unsubscribe();
+  // ngOnDestroy() {
+  //   this.usuariosSubscription?.unsubscribe();
+  // }
+
+  private usuarioExiste (): boolean{
+    let existe = false;
+
+    if(this.usuarios.some( usuario => usuario.mail.toLowerCase().trim() === this.mail.toLowerCase().trim())){
+      existe = true;
+      alert('El mail ya existe')
+    }
+
+    if(this.usuarios.some( usuario => usuario.usuario.toLowerCase().trim() === this.usuario.toLowerCase().trim())){
+      existe = true;
+      alert('El usuario ya existe')
+    }
+
+    if(this.usuarios.some( usuario => usuario.contrasena.toLowerCase().trim() === this.contrasena.toLowerCase().trim())){
+      existe = true;
+      alert('La contraseña ya existe')
+    }
+
+    return existe;
   }
 
-  limpiezaDatos(){
-    let usuario_limpio = true;
+  private limpiezaDatos(): boolean{
+    let usuario_limpio = !(this.usuarioExiste());
 
+    //Verificar si las contraseñas son iguales
     if(this.contrasena != this.contrasena_repetida){
       alert('Las contraseñas son distintas');
       usuario_limpio = false;
     }
   
-    if (this.mail == '' || this.usuario == '' || this.contrasena == '' || this.contrasena_repetida == ''){
+    //Verificar que no esté vacía
+    if (this.mail.trim() == '' || this.usuario.trim() == '' || this.contrasena.trim() == ''){
       alert('Completa todos los datos');
       usuario_limpio = false;
     }
   
+    //Verificar que el mail tenga @ y .com
     if (!(this.mail.includes('@')) || !(this.mail.includes('.com'))){
       alert('El mail debe contener @ y .com');
+      usuario_limpio = false;
+    }
+
+    //Verificar que la contraseña tenga más de 8 caractéres
+    if(this.contrasena.length < 8){
+      alert('La contraseña debe tener más de 8 caractéres')
       usuario_limpio = false;
     }
     
     return usuario_limpio;
   }
 
-  async AgregarUsuario(){
+  async RegistrarUsuario(){
     const usuario_limpio = this.limpiezaDatos();
 
     if(usuario_limpio){
@@ -121,12 +152,13 @@ export class RegistroComponent implements OnInit, OnDestroy{
 
       try{
         await this.supabase.AgregarUsuario(mail_nuevo, usuario_nuevo, contrasena_nuevo);
-        alert('Usuario agregado');
+        this.id = await this.supabase.ObtenerIdPorMail(mail_nuevo);
+        console.log(this.id);
+        this.router.navigate(['/']);
+
       }catch(error){
         console.error('Error al agregar usuario', error);
       }
-
     }
-
   }
 }
