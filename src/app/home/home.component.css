@@ -1,31 +1,14 @@
-h1{
-    color: var(--blanco);
-}
-
-#container-juegos{
+/* ESTILO PORTADA */
+.container-presentacion{
     display: grid;
     grid-template-columns: 50% 50%;
-}
-
-.carta-juego{
-    position: relative;
+    padding-top: 20vh;
+    padding-bottom: 20vh;
     justify-items: center;
-    overflow: hidden;
-    height: 60vh;
+    align-content: center;
 }
 
-.carta-juego img{
-    position: absolute;
-    object-fit: cover;
-    height: 60vh;
-    width: 100%;
-}
-
-.descripcion{
-    position: relative;
-    color: var(--negro);
-    justify-items: center;
-    align-content: space-around;
-    padding: 2%;
-    z-index: 2;
+.container-presentacion h1{
+    color: var(--blanco);
+    font-size: 3rem;
 }

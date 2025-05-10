@@ -50,7 +50,7 @@ h1{
 }
 
 .carta-juego .descripcion{
-    display: block;
+    display: none;
     position: relative;
     color: var(--negro);
     justify-items: center;

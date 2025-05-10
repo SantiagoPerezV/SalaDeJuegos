@@ -2,18 +2,18 @@
 
 <h1 class="titulo-login">Inicia Sesión</h1>
 
-<form class="formulario-login" action="">
+<div class="formulario-login" action="">
 
     <p>Bienvenido a la sala de juegos. Ingresa tu cuenta</p>
 
-    <input type="text" placeholder="Usuario">
+    <input [(ngModel)]="usuario" type="text" id="usuario" placeholder="Usuario">
 
-    <input type="password" placeholder="Contraseña">
+    <input [(ngModel)]="contrasena" type="password" id="contrasena" placeholder="Contraseña">
 
-    <button type="submit">Iniciar sesión</button>
+    <button type="submit" (click)="IniciarSesion()">Iniciar sesión</button>
 
     <a href="/registro">¿No tienes una cuenta? Regístrate</a>
     
-</form>
+</div>
 
 <app-footer/>

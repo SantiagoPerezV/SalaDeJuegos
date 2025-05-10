@@ -1,6 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { BehaviorSubject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SUPABASE_CONFIG } from './lib/constants';
 import { Database, Usuario } from './lib/interfaces';
 import { isPlatformBrowser } from '@angular/common';
@@ -11,6 +12,8 @@ import { isPlatformBrowser } from '@angular/common';
 
 export class SupabaseService {
   private supabase!: SupabaseClient<Database>; //La ! al final significa que la variable se inicializará después de la creación de la clase (en el constructor).
+  
+  private usuariosSubscription!: Subscription;
 
   /**
   * BehaviorSubject es como una "caja" especial que:
@@ -131,7 +134,6 @@ export class SupabaseService {
     if(error){throw error;};
     return data[0].id; //Devuelve un array, que dentro de corchetes tiene los valores que devuelve.
   }
-
 }
 
  

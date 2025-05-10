@@ -1,5 +1,5 @@
-
-#items{
+/* ESTILOS GENERAL */
+.items{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,14 +17,49 @@
     color:gray
 }
 
-
+/* BARRA DE NAVEGACION PRINCIPAL */
 #barra-navegacion{
     position:fixed;
     align-content: center;
     z-index: 99;
     top: 10px;
-    right: 29%;
+    right: 38%;
     background-color: var(--negro);
     padding-right: 2rem;
     border-radius: 20px;
+}
+
+/* BARRA DE NAVEGACION USUARIO */
+.navegacion-usuario{
+    position:fixed;
+    align-content: center;
+    z-index: 98;
+    top: 10px;
+    right: 10%;
+    background-color:rgb(92, 117, 161);
+    padding: 1rem;
+    border-radius: 20px;
+    margin: 0;
+}
+
+/* BARRA DE NAVEGACION USUARIO NO LOGUEADO */
+.navegacion-usuario .item a{
+    background-color: rgb(92, 117, 161);
+}
+.navegacion-usuario .item a:hover{
+    color: rgb(114, 149, 204);
+}
+
+/* BARRA DE NAVEGACION USUARIO LOGUEADO */
+.navegacion-usuario button, .navegacion-usuario li{
+    background-color: rgb(92, 117, 161);
+    color: white;
+    border: none;
+    font-style: bold;
+    font-weight: 600;
+    transition-duration: 0.2s;
+    font-size: medium;
+}
+.navegacion-usuario button:hover{
+    color: rgb(161, 67, 67);
 }

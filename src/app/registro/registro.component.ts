@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Subscription } from 'rxjs';
 
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css',
-  imports: [NavbarComponent, FooterComponent, FormsModule, CommonModule],
+  imports: [NavbarComponent, FooterComponent, FormsModule],
   standalone: true,
 })
 
@@ -66,7 +66,7 @@ export class RegistroComponent implements OnInit{
   ngOnInit(): void{
 
     this.usuariosSubscription = this.supabase.usuarios$.subscribe({
-      //Cuando recibimos nuevas tareas, guardamos la lista de objetos Usuario en la variable local this.usuarios.
+      //guardamos la lista de objetos Usuario en la variable local this.usuarios.
       next: (usuarios: Usuario[]) => {
         this.usuarios = usuarios;
       },
@@ -152,8 +152,9 @@ export class RegistroComponent implements OnInit{
 
       try{
         await this.supabase.AgregarUsuario(mail_nuevo, usuario_nuevo, contrasena_nuevo);
-        this.id = await this.supabase.ObtenerIdPorMail(mail_nuevo);
-        console.log(this.id);
+        if(this.isBrowser) {
+          localStorage.setItem('usuario', JSON.stringify({mail: mail_nuevo, usuario:usuario_nuevo, contrasena:contrasena_nuevo}));
+        }
         this.router.navigate(['/']);
 
       }catch(error){

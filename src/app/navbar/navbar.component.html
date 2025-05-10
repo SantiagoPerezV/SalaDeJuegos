@@ -1,9 +1,17 @@
 <nav id="barra-navegacion">
-    <ul id="items">
+    <ul class="items">
         <li class="item"><a href="/">Inicio</a></li>
-        <li class="item"><a href="/registro">Registrate</a></li>
-        <li class="item"><a href="/login">Iniciar sesión</a></li>
         <li class="item"><a href="/quienes-somos">Quienes somos</a></li>
         <li class="item"><a href="#footer">Contacto</a></li>
     </ul>
 </nav>
+
+<ul *ngIf="!usuario_encontrado" class="items navegacion-usuario">
+    <li class="item"><a href="/registro">Registrate</a></li>
+    <li class="item"><a href="/login">Iniciar sesión</a></li>
+</ul>
+
+<ul *ngIf="usuario_encontrado" class="items navegacion-usuario">
+    <button class="item" (click)="CerrarSesion()">Cerrar sesion</button>
+    <li class="item">{{ nombre_usuario }}</li>
+</ul>
