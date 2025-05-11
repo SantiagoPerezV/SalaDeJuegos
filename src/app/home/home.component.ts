@@ -1,18 +1,15 @@
-import { Component, OnInit, PLATFORM_ID, Inject, ViewChild } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, PLATFORM_ID, Inject, ViewChild, ElementRef } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 
-const ahorcado: string = '';
-const mayor_o_menor: string = '';
-const preguntados: string = '';
-const juego_propio: string = '';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent],
+  imports: [NavbarComponent, FooterComponent, CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -20,11 +17,17 @@ const juego_propio: string = '';
 
 export class HomeComponent implements OnInit{
 
+  esta_logueado: boolean = false;
+  estilosDescripcion: {[key: string]: string} = {};
+
   //EXPORTO EN VARIABLES CADA CARTA
-  ahorcado = cartaJuego('/assets/ahorcado.png', 'Ahorcado', '/ahorcado');
-  mayor_o_menor = cartaJuego('/assets/mayor_o_menor.jpg', 'Mayor o menor', '/mayor-o-menor');
-  preguntados = cartaJuego('/assets/preguntados.jpg', 'Preguntados', '/preguntados');
-  juego_propio = cartaJuego('/assets/proximamente.jpg', 'Proximamente', '/juego-propio');
+  juegos = [
+    { id: '1',imagen: '/assets/ahorcado.png', titulo: 'Ahorcado', link: this.esta_logueado ? '/login' : '/ahorcado' },
+    { id: '2',imagen: '/assets/mayor_o_menor.jpg', titulo: 'Mayor o menor', link: this.esta_logueado ? '/login' : '/mayor-o-menor' },
+    { id: '3',imagen: '/assets/preguntados.jpg', titulo: 'Preguntados', link: this.esta_logueado ? '/login' : '/preguntados' },
+    { id: '4',imagen: '/assets/proximamente.jpg', titulo: 'Próximamente', link: this.esta_logueado ? '/login': '/juego-propio' }
+  ];
+
   
   //COMPRUEBO QUE ESTÉ CORRIENDO EN NAVEGADOR
   private isBrowser: boolean = false;
@@ -32,33 +35,21 @@ export class HomeComponent implements OnInit{
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  @ViewChild('.descripcion') descripcion!: HTMLDivElement;
-
   ngOnInit() {
     if (this.isBrowser) {
       const usuario = localStorage.getItem('usuario');
       if (usuario) {
         console.log('Sesión activa', JSON.parse(usuario));
+        this.esta_logueado = true;
       }
     }
   }
 
-  AnimacionCartas(){
-    this.descripcion.style.display = 'block';
-  }
 
+  AnimacionCartas(id: string) {
+    this.estilosDescripcion = {
+      color: 'red',
+  };
 }
 
-
-
-function cartaJuego(imagen: string, titulo: string, link: string): string {
-  return `
-    <div (mouseover)="AnimacionCartas()" class="carta-juego">
-      <img src="${imagen}" alt="img-${titulo}">
-      <div class="descripcion">
-        <h2>${titulo}</h2>
-        <a href="${link}">Entrar</a>
-      </div>
-    </div>
-  `;
 }

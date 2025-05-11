@@ -11,9 +11,6 @@ import { SupabaseService } from '../supabase.service';
 import { Router } from '@angular/router';
 
 //Estar logueado si o si al querer entrar en un juego
-//Guardar inicio de sesión mientras que está en la página
-//Separar login  registro de menu de navegación principal, ponerlo más a la derecha.
-//Una vez registrado o iniciado sesion, sacar esta parte del menú e indicar quien es o algo asi y un botón de cerrar sesión
 
 @Component({
   selector: 'app-login',
