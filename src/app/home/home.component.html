@@ -7,9 +7,9 @@
 
 <div id="container-juegos">
 
-    <div *ngFor="let juego of juegos" class="carta-juego" (mouseenter)="AnimacionCartas('carta-' + juego.id)">
-        <img [src]="juego.imagen" [alt]="'img-' + juego.titulo">
-        <div class="descripcion" [ngStyle]="estilosDescripcion" id= {{juego.id}}>
+    <div *ngFor="let juego of juegos" class="carta-juego" (mouseenter)="AnimacionCartasIn(juego.id)" (mouseleave)="AnimacionCartasOut(juego.id)">
+        <img [ngStyle]="imagen[juego.id]" [src]="juego.imagen" [alt]="'img-' + juego.titulo">
+        <div class="descripcion" [ngStyle]="descripcion[juego.id]" id= {{juego.id}}>
             <h2>{{ juego.titulo }}</h2>
             <a [href]='juego.link'>Entrar</a>
         </div>

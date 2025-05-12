@@ -13,11 +13,6 @@ export const routes: Routes = [
         path:'registro', loadComponent: ()=> import('./registro/registro.component').then(m=>m.RegistroComponent)
     },
 
-    { //ruta comodin, Si encuentra una url no definida, vuelve a home
-        path:'**',
-        redirectTo: ''
-    },
-
     {
         path:'', component: HomeComponent
     },

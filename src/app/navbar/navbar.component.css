@@ -47,7 +47,7 @@
     background-color: rgb(92, 117, 161);
 }
 .navegacion-usuario .item a:hover{
-    color: rgb(114, 149, 204);
+    color: var(--azul);
 }
 
 /* BARRA DE NAVEGACION USUARIO LOGUEADO */

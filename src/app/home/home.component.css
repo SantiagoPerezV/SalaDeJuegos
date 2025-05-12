@@ -36,18 +36,27 @@ h1{
     object-fit: cover;
     height: 60vh;
     width: 100%;
+    transition-duration: 0.3s;
+    background-color: white;
 }
 
 .carta-juego .descripcion{
-    display: block;
+    display: none;
     position: relative;
-    color: var(--negro);
+    color: var(--blanco);
     justify-items: center;
     align-content: space-around;
     padding: 2%;
     z-index: 2;
+    transition-duration: 0.3s;
+} 
+.carta-juego .descripcion a{
+    color:var(--blanco);
+    border: 1px solid white;
+    padding: 10%;
+    border-radius: 20px;
 }
-
-#ahorcado{ 
-    background-color: white;
+.carta-juego .descripcion a:hover{
+    color: var(--azul);
+    transition-duration: 0.2s;
 }
