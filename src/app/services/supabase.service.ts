@@ -2,8 +2,8 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { BehaviorSubject } from 'rxjs';
 import { Subscription } from 'rxjs';
-import { SUPABASE_CONFIG } from './lib/constants';
-import { Database, Usuario } from './lib/interfaces';
+import { SUPABASE_CONFIG } from '../lib/constants';
+import { Database, Usuario } from '../lib/interfaces';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { QuienesSomosComponent } from './quienes-somos/quienes-somos.component';
+import { QuienesSomosComponent } from './shared/quienes-somos/quienes-somos.component';
+import { authGuard } from './guards/guard-juego.guard';
 
 export const routes: Routes = [
 
@@ -13,6 +14,11 @@ export const routes: Routes = [
         path:'registro', loadComponent: ()=> import('./registro/registro.component').then(m=>m.RegistroComponent)
     },
 
+    // { 
+    //     path:'**',
+    //     redirectTo: ''
+    // },
+
     {
         path:'', component: HomeComponent
     },
@@ -23,21 +29,25 @@ export const routes: Routes = [
 
     {
         path:'ahorcado',
-        loadComponent: () => import('./ahorcado/ahorcado.component').then(m => m.AhorcadoComponent)
+        loadComponent: () => import('./juegos/ahorcado/ahorcado.component').then(m => m.AhorcadoComponent),
+        canActivate: [authGuard]
     },
 
     {
         path:'mayor-o-menor',
-        loadComponent: () => import('./mayor-o-menor/mayor-o-menor.component').then(m => m.MayorOMenorComponent)
+        loadComponent: () => import('./juegos/mayor-o-menor/mayor-o-menor.component').then(m => m.MayorOMenorComponent),
+        canActivate: [authGuard]
     },
 
     {
         path:'preguntados',
-        loadComponent: () => import('./preguntados/preguntados.component').then(m => m.PreguntadosComponent)
+        loadComponent: () => import('./juegos/preguntados/preguntados.component').then(m => m.PreguntadosComponent),
+        canActivate: [authGuard]
     },
 
     {
         path:'juego-propio',
-        loadComponent: () => import('./juego-propio/juego-propio.component').then(m => m.JuegoPropioComponent)
+        loadComponent: () => import('./juegos/juego-propio/juego-propio.component').then(m => m.JuegoPropioComponent),
+        canActivate: [authGuard]
     }
 ];

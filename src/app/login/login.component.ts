@@ -5,9 +5,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { FooterComponent } from '../footer/footer.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { Usuario } from '../lib/interfaces';
-import { SupabaseService } from '../supabase.service';
+import { SupabaseService } from '../services/supabase.service';
 import { Router } from '@angular/router';
 
 //Estar logueado si o si al querer entrar en un juego
