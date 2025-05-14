@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { FooterComponent } from '../../footer/footer.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
@@ -10,7 +10,7 @@ import { NavbarComponent } from '../../shared/navbar/navbar.component';
   templateUrl: './preguntados.component.html',
   styleUrl: './preguntados.component.css'
 })
-export class PreguntadosComponent {
+export class PreguntadosComponent implements OnInit{
 
   esta_logueado: boolean = false;
   

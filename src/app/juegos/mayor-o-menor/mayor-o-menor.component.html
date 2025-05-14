@@ -1,1 +1,20 @@
-<p>mayor-o-menor works!</p>
+<h2>Mayor o menor</h2>
+
+<div *ngIf="!adivinado" class="juego">
+
+    <p>Adivina el número del 0-100</p>
+    
+    <input [(ngModel)]="numero" type="text" id="numero" placeholder="Ingresa un número">
+    
+    <button type="submit" (click)="NumeroIngresado()">Adivina</button>
+
+    <p>{{mensaje}}</p>
+
+</div>
+
+<div *ngIf="adivinado" class="juego">
+    
+    <p>{{mensaje_final}}</p>
+
+</div>
+
