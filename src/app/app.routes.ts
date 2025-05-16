@@ -1,23 +1,19 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { QuienesSomosComponent } from './shared/quienes-somos/quienes-somos.component';
+import { QuienesSomosComponent } from './quienes-somos/quienes-somos.component';
 import { authGuard } from './guards/guard-juego.guard';
 
 export const routes: Routes = [
 
     { //ruta principal que muestra el login con la base de datos,
         path:'login',
-        loadComponent: () => import('./login/login.component').then(m => m.LoginComponent)
+        loadComponent: () => import('./login/login.component').then(m => m.LoginComponent),
     },
 
     { //ruta principal que muestra el Registro con la base
-        path:'registro', loadComponent: ()=> import('./registro/registro.component').then(m=>m.RegistroComponent)
+        path:'registro', 
+        loadComponent: ()=> import('./registro/registro.component').then(m=>m.RegistroComponent),
     },
-
-    // { 
-    //     path:'**',
-    //     redirectTo: ''
-    // },
 
     {
         path:'', component: HomeComponent
@@ -49,5 +45,11 @@ export const routes: Routes = [
         path:'juego-propio',
         loadComponent: () => import('./juegos/juego-propio/juego-propio.component').then(m => m.JuegoPropioComponent),
         canActivate: [authGuard]
+    },
+
+    {
+        path:'chat',
+        loadComponent: () => import('./chat/chat.component').then(m => m.ChatComponent),
     }
+
 ];

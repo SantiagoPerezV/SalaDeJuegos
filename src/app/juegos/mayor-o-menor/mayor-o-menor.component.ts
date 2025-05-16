@@ -2,7 +2,7 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { FooterComponent } from '../../footer/footer.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
 @Component({
@@ -43,18 +43,17 @@ export class MayorOMenorComponent implements OnInit{
 
   adivinado: boolean = false;
 
-  mensaje_final = `Adivinaste el número en ${this.intentos} intentos!`;
-
+  mensaje_final!: string
+  
   NumeroIngresado(){
+
     this.intentos += 1;
 
-    console.log(this.numero_a_adivinar);
-
     let numero_a_adivinar = Math.round(this.numero_a_adivinar);
-    console.log(numero_a_adivinar);
 
     if(this.numero == numero_a_adivinar){
       this.adivinado = true;
+      this.mensaje_final = `Adivinaste el número en ${this.intentos} intentos!`;
     }else{
       if(this.numero < numero_a_adivinar){
         this.mensaje = 'El número es mayor'

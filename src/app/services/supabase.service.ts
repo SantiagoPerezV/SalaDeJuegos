@@ -11,7 +11,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 
 export class SupabaseService {
-  private supabase!: SupabaseClient<Database>; //La ! al final significa que la variable se inicializará después de la creación de la clase (en el constructor).
+  supabase!: SupabaseClient<Database>; //La ! al final significa que la variable se inicializará después de la creación de la clase (en el constructor).
   
   private usuariosSubscription!: Subscription;
 
@@ -40,6 +40,9 @@ export class SupabaseService {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { //Insertamos el platform id para identificar si estamos en un navegador o en un servidor
     if(isPlatformBrowser(this.platformId)){ //Importa que ingrese por navegador
+
+      console.log('[SupabaseService] ¿Es browser?:', isPlatformBrowser(this.platformId));
+
       try {
         // Creamos el cliente de Supabase con nuestra configuración
         this.supabase = createClient<Database>(
@@ -55,6 +58,9 @@ export class SupabaseService {
         this.usuarios.error(error); //Captura el error y lo muestra por pantalla
       }
     }
+
+    console.log('[SupabaseService] ¿Es browser?:', isPlatformBrowser(this.platformId));
+
   };
 
   /**
@@ -129,11 +135,6 @@ export class SupabaseService {
     } 
   }
 
-  async ObtenerIdPorMail(mail:string): Promise<string>{
-    const {data, error} = await this.supabase.from('Usuarios').select('id').eq('mail', mail);
-    if(error){throw error;};
-    return data[0].id; //Devuelve un array, que dentro de corchetes tiene los valores que devuelve.
-  }
 }
 
  

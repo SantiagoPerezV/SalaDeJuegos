@@ -19,3 +19,11 @@ export interface Database{
         };
     };
 }
+
+export interface ChatMessage{
+    id: number,
+    content: string,
+    user_id: string,
+    user_name: string
+    created_at: string,
+}
