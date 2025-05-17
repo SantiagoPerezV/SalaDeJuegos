@@ -1,39 +1,84 @@
-<h2>Ahorcado</h2>
+<app-navbar></app-navbar>
+<h2>AHORCADO</h2>
 
 <body *ngIf="palabras_terminadas <= 5" class="ahorcado">
 
-    <div class="container-imagen">
-        <img [src]="imagen_ahorcado" class="imagen-ahorcado" alt="">
-    </div>
+    <div class="container-ahorcado">
 
-    <div class="tematica">
-        <p>{{ categoria_actual }}</p>
-    </div>
-    
-    <div class="palabra">
-        <div class="casilla" *ngFor="let letra of palabra_actual">
-          <p>{{ letra.esta_adivinado ? letra.caracter : '' }}</p>
+        <div class="container-imagen">
+            <img [src]="imagen_ahorcado" class="imagen-ahorcado" alt="">
         </div>
-      </div>
-    
-    <div class="teclado">
-        <button (click)="enviarLetra(tecla)" *ngFor="let tecla of teclas">{{ tecla }}</button>
-    </div>
 
-    <div class="estadisticas">
-        <h4>Score actual: {{ score_actual }}</h4>
-        <h4>Intentos fallidos: {{ intentos }}</h4>
-        <h4>Letras incorrectas</h4>
-        <div *ngFor="let tecla_incorrecta of teclas_incorrectas" class="tecla">
-            <p>{{ tecla_incorrecta }}</p>
+        <div class="estadisticas">
+
+            <p>Score actual: {{ score_actual }}</p>
+            <p>Intentos fallidos: {{ intentos }}</p>
+
         </div>
+        
+        <div class="palabra">
+
+            <div class="tematica">
+                <p>{{ categoria_actual }}</p>
+            </div>
+
+            <div class="container-casillas">
+                
+                <div class="casilla" *ngFor="let letra of palabra_actual">
+                  <p>{{ letra.esta_adivinado ? letra.caracter : '' }}</p>
+                </div>
+
+            </div>
+
+
+            <div class="teclado">
+
+                <div class="fila">
+                  <button *ngFor="let tecla of teclas.slice(0, 10)" (click)="enviarLetra(tecla)">
+                    {{ tecla }}
+                  </button>
+                </div>
+              
+                <div class="fila">
+                  <button *ngFor="let tecla of teclas.slice(10, 19)" (click)="enviarLetra(tecla)">
+                    {{ tecla }}
+                  </button>
+                </div>
+              
+                <div class="fila">
+                  <button *ngFor="let tecla of teclas.slice(19)" (click)="enviarLetra(tecla)">
+                    {{ tecla }}
+                  </button>
+                </div>
+
+            </div>
+
+            <div class="container-incorrectas">
+                <p>Letras incorrectas</p>
+
+                <div class="container-teclas-incorrectas">
+                    <div *ngFor="let tecla_incorrecta of teclas_incorrectas" class="teclas-incorrectas">
+                        <p> {{ tecla_incorrecta }}-</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
 </body>
 
 <body *ngIf="!(palabras_terminadas < 5)">
     
-    <p>Ha terminado el ahorcado</p>
-    <p>Tu score es: {{ score_total }}</p>
+    <div class="score-final">
+        <p>Ha terminado el ahorcado</p>
+        <p>Tu score es: {{ score_total }}</p>
+        <a href="/ahorcado" class="btn-reiniciar" type="submit">Reiniciar juego</a>
+    </div>
+
 
 </body>
+
+<app-footer></app-footer>

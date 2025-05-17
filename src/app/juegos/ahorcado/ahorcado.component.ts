@@ -44,7 +44,7 @@ export class AhorcadoComponent implements OnInit{
   intentos: number = 0;
   palabras_terminadas: number = 0;
   
-  imagen_ahorcado: string = '../../assets/ahorcado/ahorcado-' + this.intentos + '.png';
+  imagen_ahorcado: string = ''
   //score
   score_actual = 1000;
   score_total = 0;
@@ -85,6 +85,9 @@ export class AhorcadoComponent implements OnInit{
     //Igualo el score a 0 para que cuando me de una palabra, no sume el mismo
     this.score_actual = 0;
 
+    this.imagen_ahorcado = '../../assets/ahorcado/ahorcado-' + this.intentos + '.png';
+
+
     //Obtener palabra
     this.reiniciarPalabra();
 
@@ -115,12 +118,16 @@ export class AhorcadoComponent implements OnInit{
       
     }
     
-    if(!bandera_letra_encontrada){ //Si no esta en la palabra actual: agrego la letra en la lista de teclas incorrectas, bajo el score, sumo un intento y pregunto si supero los 7 intentos; si es asi, reinicio la palabra, y le reincio los intentos
+    if(!bandera_letra_encontrada){ //Si no esta en la palabra actual: agrego la letra en la lista de teclas incorrectas, bajo el score, sumo un intento, actualizo la imagen del ahorcado y pregunto si supero los 7 intentos; si es asi, reinicio la palabra, y le reincio los intentos
   
       this.teclas_incorrectas.push(letra);
+
       
       this.score_actual -= 140
       this.intentos++;
+
+
+      this.imagen_ahorcado = '../../assets/ahorcado/ahorcado-' + this.intentos + '.png'
       
       if (this.intentos > 7){
   
@@ -154,6 +161,8 @@ export class AhorcadoComponent implements OnInit{
 
     this.intentos = 0;
     this.score_actual = 1000;
+
+    this.imagen_ahorcado = '../../assets/ahorcado/ahorcado-' + this.intentos + '.png'
 
     this.palabras_terminadas++;
 

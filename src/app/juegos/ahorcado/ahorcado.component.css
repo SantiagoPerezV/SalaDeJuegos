@@ -1,19 +1,58 @@
+
 p{
     color: var(--blanco);
 }
 
+body{
+    margin-bottom: 15%;
+}
+
+/***************************************** EN JUEGO *****************************************/
+
+h2{
+    text-align: center;
+    font-size: 4rem;
+    margin-top: 12%;
+}
+
+.container-ahorcado{
+    display: flex;
+    justify-content: space-around;
+}
+
+.container-imagen{
+    justify-self: center;
+}
+
+.imagen-ahorcado{
+    height: 60vh;
+    width: 110%;
+}
+
+.estadisticas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .palabra {
     display: flex;
+    flex-direction: column;
+}
+
+.container-casillas{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 8px;
+
 }
 
 .casilla {
     width: 30px;
     height: 40px;
     border-bottom: 2px solid var(--blanco);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .casilla p {
@@ -22,10 +61,50 @@ p{
     font-weight: bold;
 }   
 
+.teclado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.fila {
+    display: flex;
+    gap: 6px;
+}
+
+button {
+    padding: 10px;
+    min-width: 32px;
+    font-size: 16px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 .tematica p{
     color: var(--blanco);
 }
 
-.letra{
+.container-teclas-incorrectas{
     display: flex;
+}
+
+/***************************************** JUEGO FINALIZADO *****************************************/
+.score-final{
+    text-align: center;
+    font-size: 3rem;
+}
+
+.btn-reiniciar{
+    color: var(--blanco);
+    background-color: var(--negro);
+    padding: 2%;
+    font-size: 1.5rem;
+    transition-duration: 0.3s;
+
+}.btn-reiniciar:hover{
+    color: gray;
+    border-radius: 20px;
 }
