@@ -1,1 +1,39 @@
-<p>ahorcado works!</p>
+<h2>Ahorcado</h2>
+
+<body *ngIf="palabras_terminadas <= 5" class="ahorcado">
+
+    <div class="container-imagen">
+        <img [src]="imagen_ahorcado" class="imagen-ahorcado" alt="">
+    </div>
+
+    <div class="tematica">
+        <p>{{ categoria_actual }}</p>
+    </div>
+    
+    <div class="palabra">
+        <div class="casilla" *ngFor="let letra of palabra_actual">
+          <p>{{ letra.esta_adivinado ? letra.caracter : '' }}</p>
+        </div>
+      </div>
+    
+    <div class="teclado">
+        <button (click)="enviarLetra(tecla)" *ngFor="let tecla of teclas">{{ tecla }}</button>
+    </div>
+
+    <div class="estadisticas">
+        <h4>Score actual: {{ score_actual }}</h4>
+        <h4>Intentos fallidos: {{ intentos }}</h4>
+        <h4>Letras incorrectas</h4>
+        <div *ngFor="let tecla_incorrecta of teclas_incorrectas" class="tecla">
+            <p>{{ tecla_incorrecta }}</p>
+        </div>
+    </div>
+
+</body>
+
+<body *ngIf="!(palabras_terminadas < 5)">
+    
+    <p>Ha terminado el ahorcado</p>
+    <p>Tu score es: {{ score_total }}</p>
+
+</body>

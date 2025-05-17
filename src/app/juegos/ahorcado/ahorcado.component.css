@@ -1,0 +1,31 @@
+p{
+    color: var(--blanco);
+}
+
+.palabra {
+    display: flex;
+    gap: 8px;
+}
+
+.casilla {
+    width: 30px;
+    height: 40px;
+    border-bottom: 2px solid var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.casilla p {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}   
+
+.tematica p{
+    color: var(--blanco);
+}
+
+.letra{
+    display: flex;
+}
