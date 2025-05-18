@@ -1,7 +1,6 @@
 #footer{
     height: 70vh;
     font-weight: 500;
-    padding-top: 15vh;
     position: sticky;
     background-color: var(--negro);
 }

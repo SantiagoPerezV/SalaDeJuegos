@@ -1,9 +1,112 @@
-h2{
-    margin-top: 15%;
-    text-align: center;
+
+a{
+    color: var(--blanco);
 }
 
-.juego{
-    justify-items: center;
-    margin-bottom: 10%
+/***************************************** EN JUEGO *****************************************/
+h2{
+    text-align: center;
+    font-size: 4rem;
+}
+
+.titulo-mayor{
+    color: var(--verde);
+}
+
+.titulo-menor{
+    color: red;
+}
+
+.container-carta{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-carta img{
+    width: 6vw;
+}
+
+.container-carta p{
+    font-size:2rem;
+}
+
+.container-botones{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.botones {
+    width: 100vw;            
+    display: flex;           
+    margin: 0;
+    padding: 0;
+    margin-bottom: 3%;
+}
+  
+.botones .boton {
+    flex: 1;
+    padding: 1.5em 0;
+    font-size: 1.2em;
+    background-color: var(--negro);
+    color: white;
+    border: 1px solid var(--negro);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.container-botones .boton:hover {
+    background-color: black;
+}
+
+.botones .mayor{
+    background-color: var(--verde);
+}
+.botones .mayor:hover{
+    background-color: rgb(32, 185, 40);
+}
+
+.botones .menor{
+    background-color: red;
+}
+.botones .menor:hover{
+    background-color: rgb(190, 0, 0);
+}
+
+/***************************************** JUEGO TERMINADO *****************************************/
+h3{
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+.container-datos{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10%;
+}
+
+.container-carta-siguiente{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.estadisticas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.estadisticas a{
+    background-color: var(--negro);
+    padding: 5%;
+    font-size: 1.2rem;
+    transition-duration: 0.3s;
+    text-align: center;
+
+}.estadisticas a:hover{
+    color: gray;
+    border-radius: 20px;
 }

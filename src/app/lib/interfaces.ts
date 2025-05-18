@@ -27,3 +27,10 @@ export interface ChatMessage{
     user_name: string
     created_at: string,
 }
+
+
+export interface Carta {
+    nombre:string,
+    valor:number,
+    getImagen(): string,
+  };

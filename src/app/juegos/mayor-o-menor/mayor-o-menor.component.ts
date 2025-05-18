@@ -1,9 +1,13 @@
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit, ElementRef, ViewChild, AfterViewInit  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import gsap from 'gsap';
 
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { Carta } from '../../lib/interfaces';
+
+
 
 @Component({
   selector: 'app-mayor-o-menor',
@@ -13,53 +17,202 @@ import { NavbarComponent } from '../../shared/navbar/navbar.component';
   styleUrl: './mayor-o-menor.component.css'
 })
 
-export class MayorOMenorComponent implements OnInit{
 
-  esta_logueado: boolean = false;
+export class MayorOMenorComponent implements OnInit, AfterViewInit{
+
+  //ARRAYS DE LAS CARTAS SEPARADO POR PALOS
+  baraja:{ [key:string]: Carta[] } = {
+    'clubs' : [
+      { nombre: '2_of_clubs', valor:2, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '3_of_clubs', valor:3, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '4_of_clubs', valor:4, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '5_of_clubs', valor:5, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '6_of_clubs', valor:6, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '7_of_clubs', valor:7, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '8_of_clubs', valor:8, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '9_of_clubs', valor:9, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '10_of_clubs', valor:10, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'J_of_clubs', valor:11, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'Q_of_clubs', valor:12, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'K_of_clubs', valor:13, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'A_of_clubs', valor:14, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+    ],
+    'diamonds' : [
+      { nombre: '2_of_diamonds', valor:2, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '3_of_diamonds', valor:3, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '4_of_diamonds', valor:4, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '5_of_diamonds', valor:5, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '6_of_diamonds', valor:6, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '7_of_diamonds', valor:7, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '8_of_diamonds', valor:8, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '9_of_diamonds', valor:9, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '10_of_diamonds', valor:10, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'J_of_diamonds', valor:11, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'Q_of_diamonds', valor:12, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'K_of_diamonds', valor:13, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'A_of_diamonds', valor:14, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+    ],
+    'hearts' : [
+      { nombre: '2_of_hearts', valor:2, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '3_of_hearts', valor:3, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '4_of_hearts', valor:4, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '5_of_hearts', valor:5, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '6_of_hearts', valor:6, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '7_of_hearts', valor:7, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '8_of_hearts', valor:8, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '9_of_hearts', valor:9, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '10_of_hearts', valor:10, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'J_of_hearts', valor:11, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'Q_of_hearts', valor:12, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'K_of_hearts', valor:13, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'A_of_hearts', valor:14, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+    ],
+    'spades' : [
+      { nombre: '2_of_spades', valor:2, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '3_of_spades', valor:3, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '4_of_spades', valor:4, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '5_of_spades', valor:5, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '6_of_spades', valor:6, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '7_of_spades', valor:7, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '8_of_spades', valor:8, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '9_of_spades', valor:9, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: '10_of_spades', valor:10, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'J_of_spades', valor:11, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'Q_of_spades', valor:12, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'K_of_spades', valor:13, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+      { nombre: 'A_of_spades', valor:14, getImagen(){return '../../assets/Cartas/' + this.nombre + '.png'} },
+    ]
+  };
+
+  //Variables del juego
+  carta_actual!: Carta
+  carta_siguiente!: Carta
+  score: number = 0;
+  juegoTerminado: boolean = false;
+  mensajeResultado: string = '';
+  baraja_actual = this.baraja;
+  palos = Object.keys(this.baraja_actual);
   
   //COMPRUEBO QUE ESTÉ CORRIENDO EN NAVEGADOR
+  esta_logueado: boolean = false;
   private isBrowser: boolean = false;
   constructor(@Inject(PLATFORM_ID) private platformId: Object){
     this.isBrowser = isPlatformBrowser(this.platformId);
-  }
-
+  };
+  
   ngOnInit() {
     if (this.isBrowser) {
       const usuario = localStorage.getItem('usuario');
       if (usuario) {
         console.log('Sesión activa', JSON.parse(usuario));
         this.esta_logueado = true;
+        this.iniciarJuego();
       }
     }
   };
 
-  numero_a_adivinar: number = (Math.random() * 100);
+  //Animacion
+  //Obtengo la imagen y el nombre
+  @ViewChild('carta') carta!: ElementRef;
+  @ViewChild('nombreCarta') nombreCarta!: ElementRef;
 
-  numero!: number;
+  //Evento antes de que salga el elemento en el viewport
+  ngAfterViewInit(): void {
+    if(this.carta){
+      this.animarCarta();
+    }
+  }
 
-  mensaje: string = 'Adivina el primer número'
+  //Animacion
+  animarCarta(): void {
+    if (this.carta) {
+      gsap.from(this.carta.nativeElement, {
+        opacity: 0,
+        rotate:360,
+        y: -150,
+        duration: 1,
+        ease: 'power2.out'
+      });
+    }
+    if(this.nombreCarta){
+      gsap.from(this.nombreCarta.nativeElement, {
+        opacity: 0,
+        y: -300,
+        duration: 1,
+        ease: 'power3.out'
+      });
+    }
+  }
 
-  intentos: number = 0;
-
-  adivinado: boolean = false;
-
-  mensaje_final!: string
+  //Función dde inicio de juego. Variables que son importantes se inicializan
+  iniciarJuego(){
+    this.carta_actual = this.obtenerCartaAleatoria();
+    this.juegoTerminado = false;
+    this.mensajeResultado = ''
+  }
   
-  NumeroIngresado(){
+  //Función para obtener una carta aleatoria. Creo una variable tipo Carta que sera el retorno. Obtengo un palo random de la lista de palos actuales. Obtengo las cartas disponibles de ese palo, pregunto si tiene cartas con la funcion, si es así, genero un index entre la cantidad de cartas que haya y guardo la carta; si no, la funcion borra el palo y vuelve a buscar.
+  obtenerCartaAleatoria(): Carta{
+    let cartaActual!: Carta;
 
-    this.intentos += 1;
+    //Obtengo el palo
+    let palo_actual = this.palos[Math.floor(Math.random() * this.palos.length)];
 
-    let numero_a_adivinar = Math.round(this.numero_a_adivinar);
-
-    if(this.numero == numero_a_adivinar){
-      this.adivinado = true;
-      this.mensaje_final = `Adivinaste el número en ${this.intentos} intentos!`;
+    //Obtengo la carta
+    let cartas = this.baraja_actual[palo_actual];
+    if(this.validacionBarajaConCartas(palo_actual)){
+      let index_carta = Math.floor(Math.random() * cartas.length);
+      cartaActual = cartas[index_carta];
     }else{
-      if(this.numero < numero_a_adivinar){
-        this.mensaje = 'El número es mayor'
-      }else{
-        this.mensaje = 'El número es menor'
+      this.obtenerCartaAleatoria();
+    }
+
+    //Retorno la carta
+    return cartaActual;
+  }
+
+  //Función para comprobar la cantidad de cartas. Creo la variable bandera que retornare despues. Pregunto si en la lista baraja_actual del palo pasado por parametros tiene 0 cartas; si es asi, la bandera sera falsa, borro el palo de la baraja actual y obtengo la lista de palos actualizada, luego pregunto si no existe ningun palo; si es asi, renuevo la baraja.
+  validacionBarajaConCartas(palo:string): boolean{
+    let bandera = true;
+
+    if(this.baraja_actual[palo].length === 0){
+      bandera = false;
+      delete this.baraja_actual[palo];
+      this.palos = Object.keys(this.baraja_actual);
+      if(!(this.baraja_actual['clubs'] || this.baraja_actual['diamonds'] || this.baraja_actual['hearts'] || this.baraja_actual['spades'])){
+        this.baraja_actual = this.baraja;
       }
+    }
+
+    return bandera;
+  }
+
+  //Función para comprobar la desicion del usuario. Genero la siguiente carta. Obtengo los valores de la carta actual, y la siguiente. Creo variable que devuelve true si la desicion del usuario es correcta, y false si no. Si es correcto, le sumo el puntaje, le envio un mensaje, y pongo la carta actual como la siguiente. Cuando existe la nueva carta, llevo a cabo la animación; y si no es correcto, le digo que perdio y cambio la bandera juegoTerminado, para que sepa que el juego se terminó.
+  elegirCarta(opcion: 'mayor' | 'menor' | 'igual') {
+    if (!this.carta_actual) return;
+  
+    this.carta_siguiente = this.obtenerCartaAleatoria();
+  
+    const actual = this.carta_actual.valor;
+    const siguiente = this.carta_siguiente.valor;
+  
+    const esCorrecto =
+      (opcion === 'mayor' && siguiente > actual) ||
+      (opcion === 'menor' && siguiente < actual) ||
+      (opcion === 'igual' && siguiente === actual);
+  
+    if (esCorrecto) {
+      this.score += 100;
+      this.mensajeResultado = '¡Correcto!';
+      this.carta_actual = this.carta_siguiente;
+
+      if(this.carta){
+        this.animarCarta();
+      }
+
+    } else {
+      this.mensajeResultado = '¡Perdiste!';
+      this.juegoTerminado = true;
     }
   }
 

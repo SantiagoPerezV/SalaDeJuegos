@@ -1,22 +1,49 @@
 <app-navbar/>
-<h2>Mayor o menor</h2>
+<h2 class="titulo"><span class="titulo-menor">Menor</span> o <span class="titulo-mayor">Mayor</span></h2>
 
-<div *ngIf="!adivinado" class="juego">
+<div *ngIf="!juegoTerminado" class="container-juego">
 
-    <p>Adivina el número del 0-100</p>
-    
-    <input [(ngModel)]="numero" type="text" id="numero" placeholder="Ingresa un número">
-    
-    <button type="submit" (click)="NumeroIngresado()">Adivina</button>
+    <div class="container-carta">
+        <img #carta [src]="carta_actual.getImagen()" class="carta" alt="">
+        <p #nombreCarta class="nombreCarta" >{{ carta_actual.nombre.replace('_of_', ' ') }}</p>
+    </div>
 
-    <p>{{mensaje}}</p>
+    <div class="container-botones">
+
+        <div class="botones">
+            <button type="submit" class="boton menor" (click)="elegirCarta('menor')">Menor</button>
+            <button type="submit" class="boton igual" (click)="elegirCarta('igual')">Igual</button>
+            <button type="submit" class="boton mayor" (click)="elegirCarta('mayor')">Mayor</button>
+        </div>
+
+        <p>{{ mensajeResultado }}</p>
+
+    </div>
 
 </div>
 
-<div *ngIf="adivinado" class="juego">
-    
-    <p>{{mensaje_final}}</p>
+<div *ngIf="juegoTerminado" class="container-terminado">
 
-</div>
+    <h3>Ha terminado el juego</h3>
+
+    <div class="container-datos">
+        
+        <div class="container-carta-siguiente">
+    
+            <img [src]="carta_siguiente.getImagen()" alt="">
+            <p>La carta era {{ carta_siguiente.nombre.replace('_of_', ' ') }}</p>
+    
+        </div>
+        
+        <div class="estadisticas">
+    
+            <p> Tu puntuación es de: {{ score }}</p>
+            <a type="submit" href="/mayor-o-menor">Reiniciar Juego</a>
+    
+        </div>
+
+    </div>
+
+    </div>
 
 <app-footer/>
