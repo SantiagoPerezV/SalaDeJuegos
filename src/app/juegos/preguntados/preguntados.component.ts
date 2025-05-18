@@ -1,22 +1,33 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { NgClass, NgIf, NgFor, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
+
+import { PreguntadosService } from '../../services/preguntadosServices/preguntados.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { Pregunta, EstadoPreguntados } from '../../lib/interfaces';
+import { RefreshService } from '../../services/refreshServices/refresh.service';
+
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-preguntados',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent],
+  imports: [NavbarComponent, FooterComponent, NgClass, NgIf, NgFor],
   templateUrl: './preguntados.component.html',
   styleUrl: './preguntados.component.css'
 })
+
 export class PreguntadosComponent implements OnInit{
+
+  estado: EstadoPreguntados = this.iniciarEstado();
+  maximoPreguntas: number = 10;
+  loading: boolean = false;
 
   esta_logueado: boolean = false;
   
   //COMPRUEBO QUE ESTÉ CORRIENDO EN NAVEGADOR
   private isBrowser: boolean = false;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object){
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private servicioPreguntados: PreguntadosService, private refreshService: RefreshService){
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -26,8 +37,98 @@ export class PreguntadosComponent implements OnInit{
       if (usuario) {
         console.log('Sesión activa', JSON.parse(usuario));
         this.esta_logueado = true;
+        this.iniciarJuego();
       }
     }
   };
+
+  private iniciarEstado(): EstadoPreguntados {
+    return {
+      preguntaActual: null,
+      respuestaEntrante: null,
+      feedback: null,
+      esCorrecto: false,
+      score: 0,
+      preguntasRespondidas: 0,
+      respuestasCorrectas: 0,
+      juegoTerminado: false,
+    }
+  }
+
+  iniciarJuego(): void {
+    this.estado = this.iniciarEstado();
+    this.refreshService.refreshComponent('preguntados');
+    this.cargarSiguientePregunta();
+  }
+
+  cargarSiguientePregunta(){
+    //Si ya se respondieron todas las preguntas, termino el juego
+    if (this.estado.preguntasRespondidas >= this.maximoPreguntas){
+      this.terminarJuego();
+      return;
+    }
+
+    this.estado.feedback = null;
+    this.estado.respuestaEntrante = null;
+    this.loading = true;
+
+    this.servicioPreguntados.obtenerPreguntaRandom().subscribe({
+      next: (pregunta: any) => {
+        try {
+          this.estado.preguntaActual = {
+            id:pregunta.id,
+            pregunta:pregunta.pregunta,
+            categoria: typeof pregunta.categoria === 'object' ? pregunta.categoria.nombre : pregunta.categoria,
+            opciones: Array.isArray(pregunta.opciones) ?
+              pregunta.opciones.slice(0, 4) :
+              ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'],
+            respuestaCorrecta: pregunta.respuestaCorrecta
+          };
+          console.log('Pregunta cargada: ', this.estado.preguntaActual)
+        } catch (error) {
+          console.error('Error al procesar la pregunta: ', error);
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar la pregunta', error);
+      }
+    })
+
+  }
+
+  terminarJuego(): void {
+    if (this.estado.juegoTerminado) return;
+
+    this.estado.juegoTerminado = true;
+    this.estado.feedback = 'Juego terminado. Puntaje final: ' + this.estado.score + '. Respuestas correctas: ' + this.estado.respuestasCorrectas + ' / ' + this.maximoPreguntas;
+
+  }
+
+  //Funcion para obtener la respuesta del usuario
+  seleccionarRespuesta(option: string): void{
+    if (this.estado.respuestaEntrante || !this.estado.preguntaActual) return;
+
+    this.estado.respuestaEntrante = option;
+    this.estado.esCorrecto = option === this.estado.preguntaActual.respuestaCorrecta;
+    this.estado.feedback = this.estado.esCorrecto ? 'Respuesta correcta' : 'Respuesta incorrecta. La respuesta correcta es: ' + this.estado.preguntaActual.respuestaCorrecta;
+
+    //Actualizar estadisticaas
+    this.estado.preguntasRespondidas++;
+    if (this.estado.esCorrecto){
+      this.estado.respuestasCorrectas++;
+      this.estado.score += 100;
+    }
+
+    //Si es la ultima pregunta, termina el juego
+    if(this.estado.preguntasRespondidas >= this.maximoPreguntas) {
+      //Evito llamadas duplicadas a endGame
+      if(!this.estado.juegoTerminado) {
+        setTimeout(() => this.terminarJuego(), 1500);
+      }
+    };
+
+  }
+
 
 }

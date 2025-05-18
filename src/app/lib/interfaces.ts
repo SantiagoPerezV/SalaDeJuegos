@@ -33,4 +33,23 @@ export interface Carta {
     nombre:string,
     valor:number,
     getImagen(): string,
-  };
+};
+
+export interface Pregunta{
+    id: number,
+    pregunta: string,
+    categoria: {nombre:string},
+    opciones: string[], 
+    respuestaCorrecta: string
+}
+
+export interface EstadoPreguntados{
+    preguntaActual: Pregunta | null;
+    respuestaEntrante: string | null;
+    feedback: string | null;
+    esCorrecto: boolean;
+    score: number;
+    preguntasRespondidas: number;
+    respuestasCorrectas: number;
+    juegoTerminado: boolean;
+}
