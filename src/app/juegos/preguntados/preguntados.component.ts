@@ -1,5 +1,5 @@
 import { NgClass, NgIf, NgFor, isPlatformBrowser } from '@angular/common';
-import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 
 import { PreguntadosService } from '../../services/preguntadosServices/preguntados.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
@@ -7,6 +7,7 @@ import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { Pregunta, EstadoPreguntados } from '../../lib/interfaces';
 import { RefreshService } from '../../services/refreshServices/refresh.service';
 
+import { gsap } from 'gsap';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -17,7 +18,7 @@ import { firstValueFrom } from 'rxjs';
   styleUrl: './preguntados.component.css'
 })
 
-export class PreguntadosComponent implements OnInit{
+export class PreguntadosComponent implements OnInit, AfterViewInit{
 
   estado: EstadoPreguntados = this.iniciarEstado();
   maximoPreguntas: number = 10;
@@ -27,7 +28,7 @@ export class PreguntadosComponent implements OnInit{
   
   //COMPRUEBO QUE ESTÉ CORRIENDO EN NAVEGADOR
   private isBrowser: boolean = false;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private servicioPreguntados: PreguntadosService, private refreshService: RefreshService){
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private servicioPreguntados: PreguntadosService, private refreshService: RefreshService,   private cdr: ChangeDetectorRef  ){
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -41,6 +42,27 @@ export class PreguntadosComponent implements OnInit{
       }
     }
   };
+
+  //Animacion
+  //Obtengo el boton
+  @ViewChild('preguntaContainer') preguntaContainer!:ElementRef;
+
+  ngAfterViewInit(): void {
+    if(this.preguntaContainer){
+      this.animarPregunta();
+    }
+  }
+  
+  animarPregunta(): void {
+    if (this.preguntaContainer) {
+      gsap.from(this.preguntaContainer.nativeElement, {
+        y: -100,
+        opacity: 0,
+        duration: 1,
+        ease: 'power2.out'
+      });
+    }
+  }
 
   private iniciarEstado(): EstadoPreguntados {
     return {
@@ -73,22 +95,27 @@ export class PreguntadosComponent implements OnInit{
     this.loading = true;
 
     this.servicioPreguntados.obtenerPreguntaRandom().subscribe({
-      next: (pregunta: any) => {
+      next: (p: any) => {
         try {
           this.estado.preguntaActual = {
-            id:pregunta.id,
-            pregunta:pregunta.pregunta,
-            categoria: typeof pregunta.categoria === 'object' ? pregunta.categoria.nombre : pregunta.categoria,
-            opciones: Array.isArray(pregunta.opciones) ?
-              pregunta.opciones.slice(0, 4) :
+            id:p.id,
+            pregunta:p.pregunta,
+            categoria: typeof p.categoria === 'object' ? p.categoria.nombre : p.categoria,
+            opciones: Array.isArray(p.opciones) ?
+              p.opciones.slice(0, 4) :
               ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'],
-            respuestaCorrecta: pregunta.respuestaCorrecta
+            respuestaCorrecta: p.respuestaCorrecta
           };
           console.log('Pregunta cargada: ', this.estado.preguntaActual)
         } catch (error) {
           console.error('Error al procesar la pregunta: ', error);
         }
         this.loading = false;
+
+        this.cdr.detectChanges();
+
+        setTimeout(() => this.animarPregunta(), 0);
+
       },
       error: (error) => {
         console.error('Error al cargar la pregunta', error);
@@ -126,7 +153,7 @@ export class PreguntadosComponent implements OnInit{
       if(!this.estado.juegoTerminado) {
         setTimeout(() => this.terminarJuego(), 1500);
       }
-    };
+    }
 
   }
 

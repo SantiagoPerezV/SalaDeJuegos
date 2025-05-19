@@ -1,1 +1,79 @@
-<p>preguntados works!</p>
+<app-navbar></app-navbar>
+<h2>JUEGO DE PREGUNTAS</h2>
+
+<div class="container-juego">
+
+    <div class="container-estadistica">
+
+        <div class="puntuacion">
+            <p>Tu puntaje es de: {{estado.score}}</p>
+        </div>
+
+        <div class="progreso">
+            <p>Preguntas: {{ estado.preguntasRespondidas }} / {{maximoPreguntas}}</p>
+        </div>
+
+    </div>
+
+    <div *ngIf="loading" class="cargando">
+        <p>Cargando pregunta...</p>
+    </div>
+    
+    <div *ngIf="!loading && estado.preguntaActual" class="container-pregunta">
+
+        <div #preguntaContainer class="carta-pregunta" *ngIf="!estado.juegoTerminado">
+
+            <p>{{ estado.preguntaActual.categoria }}</p>
+            <h3>{{ estado.preguntaActual.pregunta }}</h3>
+
+            <div class="container-opciones">
+
+                <button *ngFor="let opcion of estado.preguntaActual.opciones"
+                (click)="seleccionarRespuesta(opcion)"
+                [disabled]="estado.respuestaEntrante !== null"
+                [ngClass]="{
+                    'correct': estado.respuestaEntrante === opcion && estado.esCorrecto,
+                    'incorrect': estado.respuestaEntrante === opcion && !estado.esCorrecto,
+                    'disabled': estado.respuestaEntrante !== null && estado.respuestaEntrante !== opcion
+                }"
+                class="boton-opcion"
+                #botonOpciones
+                >
+                {{ opcion }}
+                </button>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="estado.feedback " class="mensaje-feedback" [ngClass]="{
+            'correcta': estado.esCorrecto,
+            'error': !estado.esCorrecto
+        }">
+        {{ estado.feedback }}
+        </div>
+
+        <div class="controles-juego">
+            <button
+                *ngIf="estado.respuestaEntrante && !estado.juegoTerminado"
+                (click)="cargarSiguientePregunta()"
+                class="boton-siguiente"
+            >
+                Siguiente pregunta
+            </button>
+
+            <button
+                *ngIf="estado.juegoTerminado"
+                (click)="iniciarJuego()"
+                class="boton-reiniciar"
+            >
+                Jugar de nuevo
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<app-footer></app-footer>

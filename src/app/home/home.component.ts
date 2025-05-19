@@ -17,8 +17,6 @@ import { RouterLink } from '@angular/router';
 
 export class HomeComponent implements OnInit{
   
-  
-  
   //EXPORTO EN VARIABLES CADA CARTA
   juegos = [
     { id: '1',imagen: '/assets/ahorcado.png', titulo: 'Ahorcado', link: '/ahorcado' },

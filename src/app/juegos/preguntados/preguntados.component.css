@@ -1,0 +1,97 @@
+h2{
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 300;
+    margin-top: 10%;
+}
+
+.container-juego{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    margin-top: 6%;
+    margin-bottom:10%;
+}
+
+.container-estadistica{
+    text-align: center;
+    align-content: center;
+}
+
+.cargando p{
+    text-align: center;
+}
+
+.carta-pregunta{
+    border: 1px solid var(--blanco);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5%;
+    padding-bottom: 10%;
+    padding-left: 3%;
+    margin-right: 3%;
+}
+
+.carta-pregunta h3{
+    text-align: center;
+    font-weight: 300;
+}
+
+.container-opciones{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container-opciones button{
+    background-color: transparent;
+    border: 1px solid var(--blanco);
+    color: var(--blanco);
+    cursor: pointer;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+    padding: 1%;
+
+}
+
+.container-opciones .boton-opcion:hover{
+    background-color: grey;
+}
+
+.container-opciones .incorrect, .container-opciones .incorrect:hover{
+    background-color: red;
+}
+
+.container-opciones .correct, .container-opciones .correct:hover{
+    background-color: var(--verde);
+}
+
+.container-opciones .disabled{
+    color: grey;
+}
+
+.container-opciones .disabled:hover{
+    background-color: transparent;
+}
+
+.mensaje-feedback, .controles-juego{
+    display: flex;
+    justify-content: center;
+}
+
+.mensaje-feedback{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.boton-siguiente, .boton-reiniciar{
+    padding: 1%;
+    background-color: var(--azul);
+    color: var(--blanco);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+.boton-siguiente:hover, .boton-reiniciar:hover{
+    font-size: 0.9rem;
+}
