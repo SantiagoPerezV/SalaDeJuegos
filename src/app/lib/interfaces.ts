@@ -53,3 +53,12 @@ export interface EstadoPreguntados{
     respuestasCorrectas: number;
     juegoTerminado: boolean;
 }
+
+export interface Resultado{
+    id?: number;
+    user_id: number;
+    game_type: string;
+    score: number;
+    details?: any;
+    created_at?: Date;
+}

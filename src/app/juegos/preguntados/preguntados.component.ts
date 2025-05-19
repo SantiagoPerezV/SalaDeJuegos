@@ -4,11 +4,11 @@ import { Component, OnInit, Inject, PLATFORM_ID, ViewChild, ElementRef, AfterVie
 import { PreguntadosService } from '../../services/preguntadosServices/preguntados.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { ResultadosService } from '../../services/resultadosServices/resultados.service';
 import { Pregunta, EstadoPreguntados } from '../../lib/interfaces';
 import { RefreshService } from '../../services/refreshServices/refresh.service';
 
 import { gsap } from 'gsap';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-preguntados',
@@ -28,7 +28,7 @@ export class PreguntadosComponent implements OnInit, AfterViewInit{
   
   //COMPRUEBO QUE ESTÉ CORRIENDO EN NAVEGADOR
   private isBrowser: boolean = false;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private servicioPreguntados: PreguntadosService, private refreshService: RefreshService,   private cdr: ChangeDetectorRef  ){
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private servicioPreguntados: PreguntadosService, private refreshService: RefreshService,   private cdr: ChangeDetectorRef, private resultados: ResultadosService  ){
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -124,12 +124,13 @@ export class PreguntadosComponent implements OnInit, AfterViewInit{
 
   }
 
-  terminarJuego(): void {
+  async terminarJuego(): Promise<void> {
     if (this.estado.juegoTerminado) return;
 
     this.estado.juegoTerminado = true;
     this.estado.feedback = 'Juego terminado. Puntaje final: ' + this.estado.score + '. Respuestas correctas: ' + this.estado.respuestasCorrectas + ' / ' + this.maximoPreguntas;
 
+    await this.guardarScore();
   }
 
   //Funcion para obtener la respuesta del usuario
@@ -153,6 +154,38 @@ export class PreguntadosComponent implements OnInit, AfterViewInit{
       if(!this.estado.juegoTerminado) {
         setTimeout(() => this.terminarJuego(), 1500);
       }
+    }
+
+  }
+
+  private resultadoGuardado: boolean = false;
+
+  async guardarScore(): Promise<void>{
+    if(this.resultadoGuardado) return;
+
+    const usuario = localStorage.getItem('usuario');
+    let user: any;
+    if (usuario) {
+      user = JSON.parse(usuario);
+    }
+
+    try{
+      if(user){
+        await this.resultados.guardarResultados({
+          user_id: user.id,
+          game_type: 'preguntados',
+          score: this.estado.score,
+          details:{
+            preguntasRespondidas: this.estado.preguntasRespondidas,
+            respuestasCorrectas: this.estado.respuestasCorrectas,
+            maximoPreguntas: this.maximoPreguntas
+          }
+        });
+      }
+      this.resultadoGuardado = true;
+      console.log('Datos guardados correctamente');
+    } catch(error){
+      console.log('Error al guardar los datos: ', error);
     }
 
   }
