@@ -5,6 +5,7 @@ import gsap from 'gsap';
 
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { ResultadosService } from '../../services/resultadosServices/resultados.service';
 import { Carta } from '../../lib/interfaces';
 
 
@@ -96,7 +97,7 @@ export class MayorOMenorComponent implements OnInit, AfterViewInit{
   //COMPRUEBO QUE ESTÉ CORRIENDO EN NAVEGADOR
   esta_logueado: boolean = false;
   private isBrowser: boolean = false;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object){
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private resultados: ResultadosService){
     this.isBrowser = isPlatformBrowser(this.platformId);
   };
   
@@ -188,7 +189,7 @@ export class MayorOMenorComponent implements OnInit, AfterViewInit{
   }
 
   //Función para comprobar la desicion del usuario. Genero la siguiente carta. Obtengo los valores de la carta actual, y la siguiente. Creo variable que devuelve true si la desicion del usuario es correcta, y false si no. Si es correcto, le sumo el puntaje, le envio un mensaje, y pongo la carta actual como la siguiente. Cuando existe la nueva carta, llevo a cabo la animación; y si no es correcto, le digo que perdio y cambio la bandera juegoTerminado, para que sepa que el juego se terminó.
-  elegirCarta(opcion: 'mayor' | 'menor' | 'igual') {
+  async elegirCarta(opcion: 'mayor' | 'menor' | 'igual'): Promise<void> {
     if (!this.carta_actual) return;
   
     this.carta_siguiente = this.obtenerCartaAleatoria();
@@ -212,8 +213,40 @@ export class MayorOMenorComponent implements OnInit, AfterViewInit{
 
     } else {
       this.mensajeResultado = '¡Perdiste!';
+      this.resultadoGuardado = false;
       this.juegoTerminado = true;
+      await this.guardarResultado();
     }
+  }
+
+  private resultadoGuardado: boolean = false;
+
+  async guardarResultado(): Promise<void>{
+    if(this.resultadoGuardado) return;
+
+    const usuario = localStorage.getItem('usuario');
+    let user: any;
+    if (usuario) {
+      user = JSON.parse(usuario);
+    }
+
+    try{
+      if(user){
+        await this.resultados.guardarResultados({
+          user_id: user.id,
+          game_type: 'mayor-o-menor',
+          score: this.score,
+          details:{
+            cartasCorrectas: this.score / 100
+          }
+        });
+      }
+      this.resultadoGuardado = true;
+      console.log('Datos guardados correctamente');
+    } catch(error){
+      console.log('Error al guardar los datos: ', error);
+    }
+
   }
 
 }

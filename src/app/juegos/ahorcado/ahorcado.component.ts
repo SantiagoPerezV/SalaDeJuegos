@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { ResultadosService } from '../../services/resultadosServices/resultados.service';
 
 @Component({
   selector: 'app-ahorcado',
@@ -59,7 +60,7 @@ export class AhorcadoComponent implements OnInit{
   
   //COMPRUEBO QUE ESTÉ CORRIENDO EN NAVEGADOR
   private isBrowser: boolean = false;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object){
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private resultado: ResultadosService){
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -166,6 +167,10 @@ export class AhorcadoComponent implements OnInit{
 
     this.palabras_terminadas++;
 
+    if(!(this.palabras_terminadas < 5)){
+      this.guardarResultado();
+    }
+
   }
   
   //Recorro los caracteres de la palabra actual. Si hay alguna letra que no este adivinada, la bandera se convierte en false. Si no, queda en true y se retorna este semaforo.
@@ -180,6 +185,34 @@ export class AhorcadoComponent implements OnInit{
     }
     return bandera_gano;
   }
+  
+  private resultadoGuardado: boolean = false;
 
+  async guardarResultado(): Promise<void>{
+    if(this.resultadoGuardado) return;
+
+    const usuario = localStorage.getItem('usuario');
+    let user: any;
+    if (usuario) {
+      user = JSON.parse(usuario);
+    }
+
+    try{
+      if(user){
+        await this.resultado.guardarResultados({
+          user_id: user.id,
+          game_type: 'ahorcado',
+          score: this.score_total,
+          details:{
+            categoria: this.categoria_actual
+          }
+        });
+      }
+      this.resultadoGuardado = true;
+      console.log('Datos guardados correctamente');
+    } catch(error){
+      console.log('Error al guardar los datos: ', error);
+    }
+
+  }
 }
-//IMPLEMENTAR BD

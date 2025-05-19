@@ -130,6 +130,8 @@ export class PreguntadosComponent implements OnInit, AfterViewInit{
     this.estado.juegoTerminado = true;
     this.estado.feedback = 'Juego terminado. Puntaje final: ' + this.estado.score + '. Respuestas correctas: ' + this.estado.respuestasCorrectas + ' / ' + this.maximoPreguntas;
 
+    this.resultadoGuardado = false;
+
     await this.guardarScore();
   }
 
