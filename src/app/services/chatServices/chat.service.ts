@@ -18,12 +18,10 @@ export class ChatService {
 
   async obtenerMensajes(): Promise<ChatMessage[]> {
     if (!this.isBrowser) {
-      console.log(`[ChatService] No es browser, no obtiene mensajes`);
       return [];
     }
   
     if (!this.supabaseService.supabase) {
-      console.error('[ChatService] Supabase no está inicializado');
       return [];
     }
   
@@ -37,7 +35,6 @@ export class ChatService {
       throw error;
     }
   
-    console.log('[ChatService] Mensajes recibidos desde Supabase:', data);
     return data as ChatMessage[];
   }
 
@@ -70,7 +67,7 @@ export class ChatService {
       .insert({
           content: content.trim(),
           user_id: userId,
-          user_name: userName
+          user_name: userName,
       });
     if(error) throw error;
   }

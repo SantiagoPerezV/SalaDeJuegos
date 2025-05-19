@@ -5,14 +5,18 @@
     <p>Sala de juegos donde los medirás tus capacidades cognitivas y motrices.</p>
 </div>
 
-<div id="container-juegos">
+<div class="container-titulo-juegos">
 
-    <div *ngFor="let juego of juegos" class="carta-juego" (mouseenter)="AnimacionCartasIn(juego.id)" (mouseleave)="AnimacionCartasOut(juego.id)">
-        <img [ngStyle]="imagen[juego.id]" [src]="juego.imagen" [alt]="'img-' + juego.titulo">
-        <div class="descripcion" [ngStyle]="descripcion[juego.id]" id= {{juego.id}}>
-            <h2>{{ juego.titulo }}</h2>
-            <a *ngIf='esta_logueado' [href]='juego.link'>Entrar</a>
-            <a *ngIf='!esta_logueado' href='/login'>Entrar</a>
+    <h3>JUE<span>GOS DISPONIB</span>LES</h3>
+
+    <div id="container-juegos">
+        <div *ngFor="let juego of juegos" class="carta-juego" (mouseenter)="AnimacionCartasIn(juego.id)" (mouseleave)="AnimacionCartasOut(juego.id)">
+            <img #cartaJuego [ngStyle]="imagen[juego.id]" [src]="juego.imagen" [alt]="'img-' + juego.titulo">
+            <div class="descripcion" [ngStyle]="descripcion[juego.id]" id= {{juego.id}}>
+                <h2>{{ juego.titulo }}</h2>
+                <a *ngIf='esta_logueado' [href]='juego.link'>Entrar</a>
+                <a *ngIf='!esta_logueado' href='/login'>Entrar</a>
+            </div>
         </div>
     </div>
 

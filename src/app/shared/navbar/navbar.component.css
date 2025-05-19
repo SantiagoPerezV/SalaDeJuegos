@@ -62,4 +62,5 @@
 }
 .navegacion-usuario button:hover{
     color: rgb(161, 67, 67);
+    cursor: pointer;
 }

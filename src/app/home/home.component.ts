@@ -1,4 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject} from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 
 import { FooterComponent } from '../shared/footer/footer.component';
@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit{
       this.imagen[id] = {
         opacity:'0.5',
         transform:'scale(1.25)',
-        filter:'brightness(90%) blur(1px)',
+        filter:'brightness(85%) blur(4px)',
       }
   };
 

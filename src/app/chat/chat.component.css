@@ -1,9 +1,116 @@
-*{
-    color:white;
+h2{
+    font-size: 4rem;
+    font-weight: 300;
+    text-align: center;
+    margin-top: 10%;
 }
 
-.mensajes {
-    border: 1px solid red;
+h5{
+    font-size: 2rem;
+    font-weight: 100;
+    text-align: center;
+}
+
+.cargando-mensajes p{
+    text-align: center;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-mensajes{
+    border: 1px solid var(--blanco);
+    border-radius: 20px;
+    display:flex;
+    flex-direction: column;
+    width: 700px;
+    height: 500px;
+    overflow-y: scroll;
+    gap: 8px; 
     padding: 10px;
-    color: white;
-  }
+}
+
+.mensajes{
+    display: flex;
+    flex-direction: column;
+    padding: 1.5%;
+    border-radius: 12px;
+    max-width: 60%;
+    width: fit-content;
+}
+
+.mensajes .header-mensaje{
+    display: flex;
+}
+
+.header-mensaje .usuario{
+    margin-right: 2%;
+}
+
+.contenido{
+    text-align:right;
+}
+
+.container-mensajes .personal{
+    align-items: end;
+    border: 1px solid var(--verde);
+    align-self: flex-end;
+}
+
+.container-mensajes .otro{
+    align-items: start;
+    border: 1px solid var(--azul);
+    align-self: flex-start;
+}
+
+.container-mensajes .personal .usuario{
+    color: var(--verde);
+}
+
+.container-mensajes .otro .usuario{
+    color: var(--azul); 
+}
+
+
+.formulario{
+    display: flex;
+    align-items: center;
+    margin-top: 8%;
+    margin-bottom: 10%;
+}
+
+.grupo-input{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 5%;
+}
+
+.grupo-input input{
+    align-self: center;
+}
+
+.grupo-input button{
+    width: fit-content;
+    align-self: center;
+    background-color: var(--blanco);
+    color: var(--negro);
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 3%;
+    padding-left: 8%;
+    padding-right: 8%;
+    transition-duration: 0.2s;
+}
+.grupo-input button:hover{
+    background-color: var(--negro);
+    color: var(--blanco);
+}
+
+.cantidad-de-caracteres{
+    margin-left: 5%;
+}

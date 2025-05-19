@@ -41,8 +41,6 @@ export class SupabaseService {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { //Insertamos el platform id para identificar si estamos en un navegador o en un servidor
     if(isPlatformBrowser(this.platformId)){ //Importa que ingrese por navegador
 
-      console.log('[SupabaseService] ¿Es browser?:', isPlatformBrowser(this.platformId));
-
       try {
         // Creamos el cliente de Supabase con nuestra configuración
         this.supabase = createClient<Database>(
@@ -58,8 +56,6 @@ export class SupabaseService {
         this.usuarios.error(error); //Captura el error y lo muestra por pantalla
       }
     }
-
-    console.log('[SupabaseService] ¿Es browser?:', isPlatformBrowser(this.platformId));
 
   };
 
