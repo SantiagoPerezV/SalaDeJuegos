@@ -63,7 +63,6 @@ export class ResultadosService {
             user_id: curr.user_id,
             username: 'Jugador' + curr.user_id.substring(0, 5), // Nombr
             score: curr.score,
-            won: curr.won,
             created_at: curr.created_at
           });
         }
