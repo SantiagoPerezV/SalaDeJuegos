@@ -1,9 +1,9 @@
 import { SupabaseClientOptions } from "@supabase/supabase-js";
 
-//Estos dos valores se encuentrar en el apartado de configuración, Data API.
+//Estos dos valores se encuentrar en el apartado de configuración, Data API y API Keys (la public).
 export const SUPABASE_CONFIG = {
-    url: 'https://khtgknelsrxicavmejpp.supabase.co',
-    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtodGdrbmVsc3J4aWNhdm1lanBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU4NTA5NzksImV4cCI6MjA2MTQyNjk3OX0.dAuVwjbc3lEhsoRHGdRulmHCN7TC43TqGlA5X5TtBcc',
+    url: 'https://uimrarmwawlcxzocrhxc.supabase.co',
+    key: 'sb_publishable_urj9nB-5IP60gcpDF4oImg_vgnzmSma',
 
     options: { //Opciones adicionales para saber como funciona la conexion con supabase
         db:  {

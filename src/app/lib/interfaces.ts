@@ -62,3 +62,12 @@ export interface Resultado{
     details?: any;
     created_at?: Date;
 }
+
+export interface Jugador{
+    id: number;
+    nombre: string;
+    foto: string;
+    club: string;
+    club_foto: string;
+    goles: number;
+}
