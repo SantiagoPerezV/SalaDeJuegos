@@ -1,0 +1,24 @@
+main{
+    margin: 5px;
+    padding: 5% 0%;
+}
+
+.jugadores{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.jugador{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.jugador img{
+    height: 30px;
+    width:fit-content;
+}
+
+.botones{
+    text-align: center;
+}

@@ -7,6 +7,9 @@ import { catchError, Observable, throwError } from 'rxjs';
 })
 
 export class JuegoPropioService {
+  
+  year = [2021, 2022, 2023];
+  league = [39, 78, 140, 135, 61, 94, 128];
 
   constructor(private http: HttpClient) { 
   };
@@ -19,7 +22,12 @@ export class JuegoPropioService {
       }
     };
 
-    return this.http.get<any>('https://v3.football.api-sports.io/players/topscorers?season=2023&league=39', options).pipe();
+    const anio = this.year[Math.floor(Math.random() * this.year.length)];
+    const league = this.league[Math.floor(Math.random() * this.league.length)];
+    
+    console.log(anio);
+    return this.http.get<any>(`https://v3.football.api-sports.io/players/topscorers?season=${anio}&league=${league}`, options).pipe();
+
 
   }
 

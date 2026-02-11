@@ -1,1 +1,61 @@
-<p>juego-propio works!</p>
+<app-navbar/>
+<main>
+
+    <h1>Adivina el goleador</h1>
+    <!-- <div class="liga" *ngIf="liga">
+        
+        <h2>{{ liga }}</h2>
+        <img [src]="foto_liga" alt="">
+        <h5>{{ ano }}</h5>
+
+    </div> -->
+
+    <div class="liga">
+        
+        <h2>Premier League</h2>
+        <img [src]="foto_liga" alt="">
+        <h5>2023</h5>
+
+    </div>
+
+    <div class="jugadores" *ngIf="!juegoTerminado">
+
+        <div *ngIf="jugadorActual" class="jugadorActual">
+            <img [src]="jugadorActual.foto" alt="">
+            <div class="jugador">
+                <h3>{{ jugadorActual.nombre }}</h3>
+                <img [src]="jugadorActual.club_foto" alt="">
+            </div>
+        </div>
+        
+        <div *ngIf="jugadorSiguiente" class="jugadorSiguiente">
+            <img [src]="jugadorSiguiente.foto" alt="">
+            <div class="jugador">
+                <h3>{{ jugadorSiguiente.nombre }}</h3>
+                <img [src]="jugadorSiguiente.club_foto" alt="">
+            </div>
+        </div>
+
+    </div>
+
+    <h3>{{mensajeResultado}}</h3>
+
+    <div class="botones" *ngIf="!juegoTerminado">
+
+        <button (click)="Adivinar('+')">+</button>
+        <button (click)="Adivinar('-')">-</button>
+
+    </div>
+
+    <div *ngIf="juegoTerminado">
+        <p *ngIf="nombre_usuario">{{ nombre_usuario }}</p>
+        <div class="score">
+            
+            <p>Puntuación: {{ score }}</p>
+            <p>Jugadores adivinados: {{ score/200 }}</p>
+
+        </div>
+    </div>
+
+</main>
+<app-footer/>
