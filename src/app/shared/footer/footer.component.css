@@ -1,17 +1,16 @@
 #footer{
-    height: 70vh;
+    height: 30vh;
     font-weight: 500;
     position: sticky;
-    background-color: var(--negro);
+    background:var(--azul);
+    padding: 3rem;
+    font-size: 0.9rem;
 }
 
 .seccion-contactos{
     display: grid;
-    grid-template-columns: 40% 40%;
-}
-
-.footer-nav ul{
-    font-size: 2.5rem;
+    grid-template-columns: 33% 33% 33%;
+    justify-items:normal;
 }
 
 .footer-redes{
@@ -20,24 +19,18 @@
     align-self: center;
 }
 
-.seccion-abajo{
-    display: grid;
-    grid-template-columns: 50% 50%;
-    font-size: 3rem;
-    font-weight: 300;
-}
-
 #footer a{
     color: gray;
 }
 
-.seccion-abajo h2{
-    font-weight: 300;
-    font-size: 2rem;
-    padding-left: 40px;
+.seccion-abajo{
+    display: flex;
+    justify-content: space-around;
 }
 
 .seccion-abajo p, .seccion-abajo h2{
+    font-weight: 300;
+    font-size: 2rem;
     margin-top: 0;
 }
 

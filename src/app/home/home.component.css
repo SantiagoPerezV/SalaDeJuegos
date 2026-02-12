@@ -1,17 +1,42 @@
 /* ESTILO PORTADA */
 .container-presentacion{
-    display: grid;
-    grid-template-columns: 50% 50%;
+    display: flex;
+    flex-direction: column;
     padding-top: 20vh;
-    padding-bottom: 20vh;
-    justify-items: center;
-    align-content: center;
+    padding-bottom: 15vh;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 30% 20%, #1e293b 0%, #0f172a 40%, #020617 100%);
+    font-weight: 200;
+    color: var(--blanco);
+    text-transform: uppercase;
 }
 
 .container-presentacion h1{
-    color: var(--blanco);
     font-size: 3rem;
 }
+
+.container-presentacion p{
+    padding-bottom: 5vh;
+}
+
+.container-presentacion button {
+    background: transparent;
+    border: 2px solid #22d3ee;
+    color: #22d3ee;
+    padding: 0.9rem 2.2rem;
+    border-radius: 40px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.container-presentacion button:hover {
+    background: rgb(34, 211, 238);
+    color: #0f172a;
+    transform: translateY(-3px);
+}
+  
 
 
 /* CSS DE CARTA JUEGOS */
@@ -33,42 +58,56 @@ h1{
 #container-juegos{
     display: grid;
     grid-template-columns: 50% 50%;
+    justify-items: center;
+    gap: 10vh;
+    margin-bottom: 10vh;
 }
 
 .carta-juego{
     position: relative;
     justify-items: center;
     overflow: hidden;
-    height: 60vh;
+    height: 30vh;
+    width: 50%;
+    border-radius: 20px;
+    border: 1px solid #1e293b;
+}
+.carta-juego:hover{
+    box-shadow: 0 20px 40px #374c6d7c;
 }
 
 .carta-juego img{
     position: absolute;
     object-fit: cover;
-    height: 60vh;
+    height: 30vh;
     width: 100%;
     transition-duration: 0.5s;
     background-color: white;
     filter: blur(1px) ;
 }
 
+.carta-juego h2{
+    font-weight: 100;
+}
+
 .carta-juego .descripcion{
     display: none;
     position: relative;
     color: var(--blanco);
-    justify-items: center;
+    text-align: center;
     align-content: space-around;
-    padding: 2%;
     z-index: 2;
     transition-duration: 0.5s;
 } 
 .carta-juego .descripcion a{
     color:var(--blanco);
-    border: 1px solid white;
-    padding: 10%;
+    border: 1px solid var(--blanco);
+    padding: 8%;
     border-radius: 20px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
 }
 .carta-juego .descripcion a:hover{
     color: var(--azul);
-    transition-duration: 0.2s;
+    background: var(--blanco);
 }

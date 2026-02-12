@@ -8,10 +8,10 @@
 
 .item a{
     font-style: bold;
-    font-weight: 600;
+    font-weight: 200;
     color: white;
     transition-duration: 0.2s;
-    background-color: var(--negro);
+    background-color: black;
 }
 .item a:hover{
     color:gray
@@ -24,7 +24,7 @@
     z-index: 99;
     top: 10px;
     right: 38%;
-    background-color: var(--negro);
+    background-color: black;
     padding-right: 2rem;
     border-radius: 20px;
 }
@@ -36,7 +36,7 @@
     z-index: 98;
     top: 10px;
     right: 10%;
-    background-color:rgb(92, 117, 161);
+    background-color:var(--azul);
     padding: 1rem;
     border-radius: 20px;
     margin: 0;
@@ -44,7 +44,7 @@
 
 /* BARRA DE NAVEGACION USUARIO NO LOGUEADO */
 .navegacion-usuario .item a{
-    background-color: rgb(92, 117, 161);
+    background-color: var(--azul);
 }
 .navegacion-usuario .item a:hover{
     color: var(--azul);
@@ -52,11 +52,11 @@
 
 /* BARRA DE NAVEGACION USUARIO LOGUEADO */
 .navegacion-usuario button, .navegacion-usuario li{
-    background-color: rgb(92, 117, 161);
+    background-color: var(--azul);
     color: white;
     border: none;
     font-style: bold;
-    font-weight: 600;
+    font-weight: 200;
     transition-duration: 0.2s;
     font-size: medium;
 }

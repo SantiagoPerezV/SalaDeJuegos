@@ -1,8 +1,10 @@
-import { Component, OnInit, PLATFORM_ID, Inject} from '@angular/core';
+import { Component, OnInit ,PLATFORM_ID, Inject} from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 
 import { FooterComponent } from '../shared/footer/footer.component';
 import { NavbarComponent } from '../shared/navbar/navbar.component';
+
+import gsap from 'gsap';
 
 
 @Component({
@@ -21,7 +23,7 @@ export class HomeComponent implements OnInit{
     { id: '1',imagen: '/assets/ahorcado.png', titulo: 'Ahorcado', link: '/ahorcado' },
     { id: '2',imagen: '/assets/mayor_o_menor.jpg', titulo: 'Mayor o menor', link: '/mayor-o-menor'},
     { id: '3',imagen: '/assets/preguntados.jpg', titulo: 'Preguntados', link: '/preguntados'},
-    { id: '4',imagen: '/assets/proximamente.jpg', titulo: 'Próximamente', link: '/juego-propio'}
+    { id: '4',imagen: '/assets/proximamente.jpg', titulo: 'Goaler Guest', link: '/juego-propio'}
   ];
   
   esta_logueado: boolean = false;
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit() {
+
     if (this.isBrowser) {
       const usuario = localStorage.getItem('usuario');
       if (usuario) {
@@ -40,6 +43,11 @@ export class HomeComponent implements OnInit{
         this.esta_logueado = true;
       }
     }
+    
+    gsap.from(".container-presentacion h1", { y: 40, opacity: 0, duration: 1.5 });
+    gsap.from(".container-presentacion p", { y: 20, opacity: 0, duration: 1.5, delay: 0.3 });
+    gsap.from(".container-presentacion button", { scale: 0.8, opacity: 0, duration: 1, delay: 0.6 });
+
   };
 
   //Lista para cambiar estilos de cada descripcion de los juegos
@@ -59,15 +67,16 @@ export class HomeComponent implements OnInit{
   };
   
   AnimacionCartasIn(id: string) {
-      this.descripcion[id] = {
-        display: 'block',
-      };
+    this.descripcion[id] = {
+      display: 'block',
+    };
 
-      this.imagen[id] = {
-        opacity:'0.5',
-        transform:'scale(1.25)',
-        filter:'brightness(85%) blur(4px)',
-      }
+    this.imagen[id] = {
+      opacity:'0.5',
+      transform:'scale(1.25)',
+      filter:'brightness(85%) blur(4px)',
+    }
+
   };
 
   AnimacionCartasOut(id: string) {
@@ -78,6 +87,6 @@ export class HomeComponent implements OnInit{
     this.imagen[id] = {
       opacity:'1',
     }
-};
+  };
   
 }

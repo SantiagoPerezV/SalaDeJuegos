@@ -2,12 +2,13 @@
 :root{
     --negro: rgb(38, 38, 38);
     --blanco: rgb(236, 236, 236);
-    --azul:  rgb(114, 149, 204);
+    --azul:   #0b1120;
     --verde: rgb(47, 255, 57);
 }
 
 *{
     font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
 }
 
 body{
